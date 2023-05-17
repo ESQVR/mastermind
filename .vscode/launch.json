@@ -8,7 +8,7 @@
 				"name": "(lldb) Launch",
 				"type": "cppdbg",
 				"request": "launch",
-				"program": "/Users/private/Projects/my_mastermind/MM_test/mastermind",
+				"program": "/Users/private/Projects/my_mastermind/my_mastermind",
 				"args": ["-c", "1224"],
 				"stopAtEntry": true,
 				"cwd": "${fileDirname}",

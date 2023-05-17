@@ -1,4 +1,4 @@
-/* MASTERMIND GAMEPLAY LOOP OVERVIEW:
+/* MASTERMIND GAME PLAY LOOP OVERVIEW:
 	1. Validate Command line arguments and options (sends args to launch_check)
 	2. Sets randomized secret code answer
 	3. Send parsed flags and flag options to flag validator / manual option setter
@@ -22,7 +22,7 @@ int code_validator(int number);				// Verifies user override for secret code is 
 int set_flag_options(int flag, int options);// Sets user overrides to game options
 void set_code(int override);				// Generates secret code (or sets to override)
 void user_input();							// Takes input from keyboard and sends it to validator
-void guess_validator(char *input);			// Validates user input (guesses): Along with user_input, constitutes main gameplay loop
+void guess_validator(char *input);			// Validates user input (guesses): Along with user_input, constitutes main game play loop
 void print_response(int well, int mis);		// Prints results of guesses between each game round
 void win_condition();						// Prints win message
 void print_error();							// Prints invalid flags error msg
@@ -124,7 +124,7 @@ int flag_check(char *flag, int override)
 		1. Each flag is assigned a:
 			a. constant defining the flag.
 			b. number to send to set_flag_options which processes the validated override option.
-		2. Flag codes are read by set_flag_options, these need to be parrallelized to function correctly
+		2. Flag codes are read by set_flag_options, these need to be parallelized to function correctly
 	*/ 
 	const char code_flag[] = "-c";
 	int c_flag = 1; 
@@ -177,7 +177,7 @@ void guess_validator(char *input)
 	int well_p = 0;
 	int mis_p = 0;
 
-	// Guess array is filled with user input. ASCII aritmetic converts numeral character to integer value.
+	// Guess array is filled with user input. ASCII arithmetic converts numeral character to integer value.
 	int i = 0;
 	while (i < 4)
 	{	
@@ -201,10 +201,10 @@ void guess_validator(char *input)
 		/*	This is the main response calculator (The primary game mechanic):
 			1. Directly compare digits in guess to the corresponding digits in secret code looking for exact matches ("Well placed")
 			2. IF there is no direct match:
-				a. Count the number of occurances of a digit in both code and guess.
+				a. Count the number of occurrences of a digit in both code and guess.
 				b. Count the quantity of each digits that occurs in both, and increment the number of misplaced pieces.
-			3. Send totals of exact matches and digits that are not exact but do appear in both to repsonse printer.
-			4. Reset counts of well palced and misplaced back to 0 for the next round.
+			3. Send totals of exact matches and digits that are not exact but do appear in both to response printer.
+			4. Reset counts of well placed and misplaced back to 0 for the next round.
 		*/
 
 		// Count exact matches (well-placed pieces).
@@ -293,9 +293,9 @@ int code_validator(int number)
 	return 0;
 }
 
-/* Primary gameplay loop - accepts user input (guesses) with read() from keyboard input:
+/* Primary game play loop - accepts user input (guesses) with read() from keyboard input:
 	1. Makes a 5 element buffer (guesses need 4 digits) to store user guess and a pointer to the buffer to pass to guess_validator.
-	3. Loops sending guesses to the guess_validator until user wins, or uese ctrl+D to exit.
+	3. Loops sending guesses to the guess_validator until user wins, or use ctrl+D to exit.
 */
 void user_input()
 {
@@ -320,7 +320,7 @@ void user_input()
 // IF guess_validator finds user input is an exact match for the secret code - prints "win" msg and sets win variable to 1.
 void win_condition()
 {
-	printf("Congratz! You did it!\n");
+	printf("Congratulations! You did it!\n");
 	win = 1;
 }
 
