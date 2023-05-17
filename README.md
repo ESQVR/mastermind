@@ -11,10 +11,11 @@ A command line program written in C for playing a version of the game "Mastermin
 
 ## Installation
 This project includes a Makefile with the following targets:
-1 - make : Builds the project files incl. executable: my_mastermind
-2 - clean : removes .o files
-3 - fclean : removes .o + executables
-3 - re : fclean + make 
+
+	1 - make : Builds the project files incl. executable: my_mastermind
+	2 - clean : removes .o files
+	3 - fclean : removes .o + executables
+	3 - re : fclean + make 
 
 ## Usage
 Run program: ./my_mastermind
