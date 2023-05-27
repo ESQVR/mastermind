@@ -10,8 +10,8 @@ Guessing the correct number sequence will result in a "Win"!
 A command line program written in C for playing a version of the game "Mastermind."
 
 
-File Directory
-_____
+## File Directory
+
 Makefile:			Makefile for installing program (see Installation below).
 mmfunctions.c:		All function definitions.
 mmglobals.c/.h:		Global variables (see inline comments for description) and global variables header.
