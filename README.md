@@ -7,7 +7,16 @@ After each guess, the player is told how many digits in their guess is correct (
 Guessing the correct number sequence will result in a "Win"!
 
 ## Description
-A command line program written in C for playing a version of the game "Mastermind"
+A command line program written in C for playing a version of the game "Mastermind."
+
+
+File Directory
+_____
+Makefile:			Makefile for installing program (see Installation below).
+mmfunctions.c:		All function definitions.
+mmglobals.c/.h:		Global variables (see inline comments for description) and global variables header.
+mmheader.h:			Header file for custom functions.
+my_mastermind.c:	Main Program.
 
 ## Installation
 This project includes a Makefile with the following targets:
@@ -25,8 +34,8 @@ There are three available flags that can be run from the command line at launch:
 2. -c: [CODE]		Manually set the secret code (4 digits: 0-8).
 3. -t: [ATTEMPTS]	Manually set the maximum number of guesses (0-99).
 
-COMMANDLINE FLAG FORMATS:
-"Help" can only be used by itself, the two other options may be used together, or seperately.
+COMMAND LINE FLAG FORMATS:
+"Help" can only be used by itself, the two other options may be used together, or separately.
 
 ./my_mastermind --help
 ./my_mastermind [FLAG] [VALUE] ... [FLAG] [VALUE]
