@@ -43,8 +43,10 @@ COMMAND LINE FLAG FORMATS:
 The program can be exited at any time using Ctrl + D
 
 ## Issues / Future updates
-Currently the game allows users to take infinite turns / guesses. No "out of guesses / turns" losing condition exists.
-This will be updated soon.
+Upcoming versions will offer:
+- Improved animations for the win screen.
+- The ability to purchase a hint with in exchange for tries.
+- New Game + with Hi Score counter.
 
 ### The Core Team
 Christopher A. Deetz

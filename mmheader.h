@@ -12,5 +12,10 @@ void print_response(int well, int mis);			// Prints results of guesses between e
 void win_condition();							// Prints win message
 void print_error();								// Prints invalid flags error msg
 void print_manual();							// Prints manual when "--help" is passed from command line
+void print_banner();							// Creates ASCII graphic for opening of Game
+void clearScreen();								// Clears screen
+void printSlowly(const char *str, 
+unsigned int delay);							// Crawl prints the intro text
+void you_lose();
 
 #endif

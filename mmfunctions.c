@@ -7,6 +7,14 @@
 #include "mmheader.h"
 #include "mmglobals.h"
 
+#define ANSI_COLOR_GREEN "\x1b[92m"
+#define ANSI_COLOR_RESET "\x1b[0m"
+#define ANSI_COLOR_TEAL "\x1b[36m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_YELLOW "\x1b[33m"
+#define ANSI_COLOR_ORANGE  "\x1b[38;5;208m"
+
 /* Validates the number, syntax, and content of command line arguments (program options):
 	1. If number of command line arguments is valid (1, 3, or 5):
 	2. Sets secret answer to "random" using set_code() with parameter '9999'
@@ -55,6 +63,7 @@ int launch_check(int argc, char *argv[])
 	 print_error();
 		return -1;
 	}
+
 }
 
 /* Validates pairs of command line flags and sets the corresponding override options:
@@ -258,6 +267,7 @@ void user_input()
 
 	 // Ensures program leaves user_input (and terminates) after the win condition is met.
 	if (bytes_read == 0) {
+		printf(ANSI_COLOR_RESET);
 		return;
 	}
 }
@@ -265,7 +275,16 @@ void user_input()
 // IF guess_validator finds user input is an exact match for the secret code - prints "win" msg and sets win variable to 1.
 void win_condition()
 {
-	printf("Congratulations! You did it!\n");
+
+	printf(ANSI_COLOR_GREEN);
+	printf("\nCODE:%d%d%d%d", code[0], code[1], code[2], code[3]);
+	printSlowly(" ... CORRECT\n", 100);
+	printf("\n************************************\n");
+	printf(ANSI_COLOR_RED);
+	printSlowly("!!! YOU ARE THE MASTERMIND !!! ", 50);
+	printf(ANSI_COLOR_GREEN);
+	printf("\n************************************\n");
+	printf(ANSI_COLOR_RESET);
 	win = 1;
 }
 
@@ -295,16 +314,89 @@ void print_error()
 void print_response(int well, int mis)
 {
 	turn++;
-	printf("Well placed pieces: %d\nMisplaced pieces: %d\n---\n", well, mis);
+	if (attempts < turn){
+		you_lose();
+		exit(0);
+	}
+	printf(ANSI_COLOR_TEAL);
+	printf("Correctly Placed Digits: %d\n", well);
+	printf(ANSI_COLOR_MAGENTA);
+	printf("Misplaced Digits: %d", mis);
+	printf(ANSI_COLOR_RESET);
+	printf("\n------------\n");
+	if (attempts - turn > 4){
+		printf(ANSI_COLOR_GREEN);
+	} else if (attempts - turn > 1 && attempts - turn <= 4){
+		printf(ANSI_COLOR_YELLOW);
+	} else {
+		printf(ANSI_COLOR_RED);
+	}
 	printf("Round: %d\n", turn);
 }
 
 // Prints command line options manual if launch_check receives exactly two (2) arguments and the second is "--help"
 void print_manual()
 {
+	printf(ANSI_COLOR_RESET);
 	printf("\nUsage: ./my_mastermind [options]\n");
 	printf("Options:\n");
     printf("\t--help\t\tDisplay this help message\n");
     printf("\t-c [CODE]\tManually select secret code answer - (4 digits 0-8: 1234)\n");
 	printf("\t-t [ATTEMPTS]\tManually select maximum number of guess attempts - (number 0-99)\n\n");
+}
+
+void printSlowly(const char *str, unsigned int delay) 
+{
+    while (*str) {
+        putchar(*str++);
+        fflush(stdout);
+        usleep(delay * 1000);
+    }
+}
+
+// Clears screen before play
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls"); // Windows
+    #else
+        system("clear"); // macOS and Linux
+    #endif
+}
+
+// ASCII graphic banner
+void print_banner()
+{
+	clearScreen();
+	int delay = 20;
+	printf(ANSI_COLOR_GREEN);
+    printf("\n\n");
+	printf("███    ███  █████  ███████ ████████ ███████ ██████  ███    ███ ██ ███    ██ ██████  \n");
+    printf("████  ████ ██   ██ ██         ██    ██      ██   ██ ████  ████ ██ ████   ██ ██   ██ \n");
+    printf("██ ████ ██ ███████ ███████    ██    █████   ██████  ██ ████ ██ ██ ██ ██  ██ ██   ██ \n");
+    printf("██  ██  ██ ██   ██      ██    ██    ██      ██   ██ ██  ██  ██ ██ ██  ██ ██ ██   ██ \n");
+    printf("██      ██ ██   ██ ███████    ██    ███████ ██   ██ ██      ██ ██ ██   ████ ██████  \n");
+    printf("                                                                           By ESQVR \n");
+    printf("                                                                                    \n");
+
+    printSlowly("The computer has just chosen a secret code made of 4 digits between 0-8.\n", delay);
+    printSlowly("You need to guess the code before the computer permanently locks down - but you have a limited number of tries.\n", delay);
+    printSlowly("If you don't enter the correct code within", delay);
+	printf(" %d", attempts);
+	printSlowly(" guesses, you lose.\n\n", delay);
+    printSlowly("For each guess the computer will display the number of digits that are in the correct location in the code.\n", delay);
+    printSlowly("The number of correct but misplaced digits will be displayed below that.", delay);
+
+}
+
+void you_lose()
+{
+	printf(ANSI_COLOR_RESET);
+	printSlowly("\n\n... ERROR: TOO MANY ATTEMPTS ...\n\n", 60);
+	printf(ANSI_COLOR_RED);
+	printSlowly("L     OOO   CCC  K  K  DDD    OOO   W     W  N   N \n", 10);
+    printSlowly("L    O   O C     K K   D  D  O   O  W     W  NN  N \n", 10);
+    printSlowly("L    O   O C     KK    D  D  O   O  W  W  W  N N N \n", 10);
+    printSlowly("L    O   O C     K K   D  D  O   O   W W W   N  NN \n", 10);
+    printSlowly("LLLL  OOO   CCC  K  K  DDD    OOO     W W    N   N \n\n\n", 10);
+	printf(ANSI_COLOR_RESET);
 }

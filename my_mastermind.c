@@ -37,8 +37,10 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	
+	print_banner();
+
 	// Initial game prompt: display only once, at successful launch
-	printf("Will you find the secret code?\nPlease enter a valid guess\n---\nRound 0\n");
+	printSlowly("\n\nPlease enter a valid code\n---\nRound 0\n", 50);
 	
 	// Main game loop
 	user_input();  
